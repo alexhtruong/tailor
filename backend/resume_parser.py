@@ -5,15 +5,12 @@ import os
 from io import BytesIO
 
 # TODO: save resume into a database using resume.save('uploads/')... etc
-# parameters: resume must be a valid file path
-# example usage: resume_text_traction('path/to/resume')
-# in this case it will be a POST file
 """
     The function `resumeTextExtraction` extracts text content from PDF and DOCX files provided as input
     resumes.
     
     :param resume: The `resumeTextExtraction` function is designed to extract text content from a resume
-    file. It first checks the file extension of the resume file to determine the format (PDF or DOCX).
+    file sent through a POST request. It first checks the file extension of the resume file to determine the format (PDF or DOCX).
     If the file is a PDF, it uses PyPDF2 to extract text from each page. If the
     :return: The `resumeTextExtraction` function returns the extracted text content from the provided
     resume file. If the file extension is '.pdf', it extracts text from each page of the PDF using

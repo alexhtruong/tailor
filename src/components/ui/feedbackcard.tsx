@@ -15,7 +15,7 @@ const feedbackSections = [
     { title: 'Summary', id: 'summary' },
 ]
 
-// italicizes, boldens, and underlines headers
+// a function that italicizes, boldens, and underlines headers
 function formatFeedback(data: string) {
   if (!data) {
     return <div className="whitespace-pre-wrap font-inter">No data available</div>;

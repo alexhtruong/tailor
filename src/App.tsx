@@ -2,6 +2,8 @@ import { useState } from 'react'
 import UploadCard from '@/components/ui/uploadcard'
 import FeedbackCard from './components/ui/feedbackcard'
 
+
+//TODO: add resume preview on screen
 export function App() {
   type Feedback = {
     [key: string]: string;
@@ -33,9 +35,7 @@ export function App() {
           setIsLoading={setIsLoading}
           onFeedBackReceived={handleFeedBackReceived}
         />
-        <FeedbackCard 
-          completion={completion}
-        />
+        <FeedbackCard completion={completion} />
       </div>
     </div>
     

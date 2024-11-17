@@ -45,6 +45,3 @@ async def handleFormSubmission():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-# we want to get the keywords from the description, then use them to match with skills that the user has
-# at the moment though the get_job_description_keywords doesnt return single words as skills, but we could use ai to match between the resume and the description
