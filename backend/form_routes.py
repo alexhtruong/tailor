@@ -1,12 +1,8 @@
-# Description: This file will be used to parse the job description that the user inputs
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from openai_client import parseFeedback, getResumeFeedback
-from resume_parser import resumeTextExtraction
+# backend/form_routes.py
+from flask import Blueprint, request, jsonify
+from utils import parseFeedback, getResumeFeedback, resumeTextExtraction
 
-# load the flask app
-app = Flask(__name__)
-CORS(app)
+form_bp = Blueprint('form_bp', __name__)
 
 """
     The function `formSubmission` handles the submission of a form with a resume file and job
@@ -15,8 +11,8 @@ CORS(app)
     :return: The code snippet defines a route '/upload' that accepts POST requests. It checks if a
     resume file and a job description are included in the request. If either of them is missing, it
     returns an error response with a status code of 400.
-    """
-@app.route('/upload', methods=['POST'])
+"""
+@form_bp.route('/upload', methods=['POST'])
 async def handleFormSubmission():
     try:
         if 'resume' not in request.files:
@@ -42,6 +38,3 @@ async def handleFormSubmission():
         # Log the error
         print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)

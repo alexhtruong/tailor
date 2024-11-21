@@ -1,14 +1,25 @@
+# resume parsing imports
+from pypdf import PdfReader
+from docx import Document
 import os
+from io import BytesIO
+
+#openai related imports
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
-# from mock_job_descriptions import job_description_1, job_description_2, job_description_3, job_description_4
 import re
 
 # Load the .env file
 load_dotenv()
 
 # Get the API key from the .env file
-openai_api_key = os.getenv("OPENAI_API_KEY")
+try:
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+    if not openai_api_key:
+        raise ValueError("OPENAI_API_KEY not found or is not set.")
+except Exception as e:
+    print(f"Error: {e}")
+    raise
 
 # Initialize the OpenAI API client
 client = AsyncOpenAI()
@@ -127,8 +138,8 @@ def parseFeedback(feedback):
     }
 
     # Print the entire feedback text for debugging
-    print("Feedback text:")
-    print(feedback)
+    # print("Feedback text:")
+    # print(feedback)
 
     for key, pattern in patterns.items():
         print(f"Matching pattern for section '{key}': {pattern}")  # Debugging statement
@@ -144,8 +155,49 @@ def parseFeedback(feedback):
             section_text = re.sub(r"(?m)^(?!\s*•)\s+", "", section_text)
             
             sections[key] = section_text
-            print(f"Section '{key}' extracted: {sections[key]}")  # Debugging statement
+            # print(f"Section '{key}' extracted: {sections[key]}")  # Debugging statement
         else:
-            print(f"No match found for section '{key}'")  # Debugging statement
+            pass
+            # print(f"No match found for section '{key}'")  # Debugging statement
 
     return sections
+
+
+# TODO: save resume into a database using resume.save('uploads/')... etc
+"""
+    The function `resumeTextExtraction` extracts text content from PDF and DOCX files provided as input
+    resumes.
+    
+    :param resume: The `resumeTextExtraction` function is designed to extract text content from a resume
+    file sent through a POST request. It first checks the file extension of the resume file to determine the format (PDF or DOCX).
+    If the file is a PDF, it uses PyPDF2 to extract text from each page. If the
+    :return: The `resumeTextExtraction` function returns the extracted text content from the provided
+    resume file. If the file extension is '.pdf', it extracts text from each page of the PDF using
+    PyPDF2 library. If the file extension is '.docx', it extracts text from paragraphs in the Word
+    document using python-docx library. If the file format is not supported, it raises a ValueError.
+"""
+def resumeTextExtraction(resume):
+    
+    file_extension = os.path.splitext(resume.filename)[1].lower()
+
+    if file_extension == '.pdf':
+        reader = PdfReader(resume.stream)
+        resume_pages = [page for page in reader.pages]
+        resume_text = ""
+        for page in resume_pages:
+            resume_text += page.extract_text()
+        
+        return resume_text
+    elif file_extension == '.docx':
+        doc_bytes = BytesIO(resume.read())
+        doc = Document(doc_bytes) 
+        resume_text = ""
+        for paragraph in doc.paragraphs:
+            resume_text += paragraph.text + "\n"
+        return resume_text
+    elif file_extension == '.txt':
+        resume_text = resume.stream.read().decode('utf-8')
+        return resume_text
+    else:
+        raise ValueError('Unsupported file format')
+    
