@@ -1,9 +1,12 @@
+// used in ./components/ui/analyzeCard.tsx
+
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { UploadSection } from "./upload";
 import axios from 'axios'
 import { useState } from 'react'
+
 
 export interface FormProps {
   file: File | null;
@@ -46,7 +49,6 @@ export function Form({ file, setFile, isLoading, setIsLoading, onFeedBackReceive
     }
 
     const jobDescription = e.currentTarget.jobDescription.value;
-
     if (isDuplicateAnalysis(file, jobDescription)) {
       alert('You have already analyzed this resume with the same job description. Please change the job description or upload a different resume.');
       return;
@@ -77,31 +79,24 @@ export function Form({ file, setFile, isLoading, setIsLoading, onFeedBackReceive
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label htmlFor="resume">Resume (.pdf, .docx, or .txt)</Label>
-        <Input
-          id="resume"
-          type="file"
-          accept=".pdf,.txt,.docx"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
-          required
-        />
-      </div>
-      <div>
-        <Label htmlFor="jobDescription">Job Description</Label>
-        <Textarea
-          id="jobDescription"
-          name="jobDescription"
-          placeholder="Paste the job description here..."
-          required
-          style={{ resize: 'both', minHeight: '300px', maxHeight: '450px', minWidth: '100%', maxWidth: '100%' }}
-        />
-      </div>
-      <Button type="submit" disabled={isLoading}>
-        {isLoading ? 'Analyzing...' : 'Analyze Resume'}
-      </Button>
-    </form>
+    <>
+      <UploadSection file={file} setFile={setFile} />
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <Label htmlFor="jobDescription">Job Description</Label>
+          <Textarea
+            id="jobDescription"
+            name="jobDescription"
+            placeholder="Paste the job description here..."
+            required
+            style={{ resize: 'both', minHeight: '300px', maxHeight: '450px', minWidth: '100%', maxWidth: '100%' }}
+          />
+        </div>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? 'Analyzing...' : 'Analyze Resume'}
+        </Button>
+      </form>
+    </>
   );
 }
 

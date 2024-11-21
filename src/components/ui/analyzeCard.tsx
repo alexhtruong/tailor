@@ -4,7 +4,7 @@ import { Form, FormProps } from "./form"
 
 interface UploadCardProps extends FormProps {}
 
-const UploadCard: React.FC<UploadCardProps> = ({ file, setFile, isLoading, setIsLoading, onFeedBackReceived }) => (
+export const UploadCard: React.FC<UploadCardProps> = ({ file, setFile, isLoading, setIsLoading, onFeedBackReceived }) => (
   <Card>
     <CardHeader>
       <CardTitle>Upload Resume and Job Description</CardTitle>
