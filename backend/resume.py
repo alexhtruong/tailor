@@ -3,11 +3,11 @@ from pypdf import PdfReader
 from docx import Document
 import os
 from io import BytesIO
+import re
 
 #openai related imports
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
-import re
 
 # Load the .env file
 load_dotenv()
@@ -137,10 +137,6 @@ def parseFeedback(feedback):
         "summary": r"\s*Summary:\s*(.*)"
     }
 
-    # Print the entire feedback text for debugging
-    # print("Feedback text:")
-    # print(feedback)
-
     for key, pattern in patterns.items():
         print(f"Matching pattern for section '{key}': {pattern}")  # Debugging statement
         match = re.search(pattern, feedback, re.DOTALL)
@@ -153,12 +149,10 @@ def parseFeedback(feedback):
             section_text = re.sub(r"###", "", section_text)    # Remove "###"
             # Remove leading spaces from lines that don't start with a bullet point
             section_text = re.sub(r"(?m)^(?!\s*•)\s+", "", section_text)
-            
+
             sections[key] = section_text
-            # print(f"Section '{key}' extracted: {sections[key]}")  # Debugging statement
         else:
             pass
-            # print(f"No match found for section '{key}'")  # Debugging statement
 
     return sections
 
@@ -177,7 +171,6 @@ def parseFeedback(feedback):
     document using python-docx library. If the file format is not supported, it raises a ValueError.
 """
 def resumeTextExtraction(resume):
-    
     file_extension = os.path.splitext(resume.filename)[1].lower()
 
     if file_extension == '.pdf':

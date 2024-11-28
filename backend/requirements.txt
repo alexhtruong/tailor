@@ -26,6 +26,7 @@ constantly==15.1.0
 cryptography==3.4.8
 cymem==2.0.8
 dbus-python==1.2.18
+deprecation==2.1.0
 distro==1.7.0
 distro-info==1.1+ubuntu0.2
 exceptiongroup==1.2.2
@@ -33,10 +34,15 @@ Flask==3.1.0
 Flask-Cors==5.0.0
 Flask-JWT-Extended==4.7.1
 frozenlist==1.5.0
+gotrue==2.11.0
+greenlet==3.1.1
 h11==0.14.0
+h2==4.1.0
+hpack==4.0.0
 httpcore==1.0.6
 httplib2==0.20.2
 httpx==0.27.2
+hyperframe==6.0.1
 hyperlink==21.0.0
 idna==3.10
 importlib-metadata==4.6.4
@@ -69,8 +75,10 @@ oauthlib==3.2.0
 openai==1.54.4
 outcome==1.3.0.post0
 packaging==24.1
+postgrest==0.18.0
 preshed==3.0.9
 propcache==0.2.0
+psycopg2-binary==2.9.10
 pyasn1==0.4.8
 pyasn1-modules==0.2.1
 pycurl==7.44.1
@@ -88,10 +96,12 @@ pyrsistent==0.18.1
 pyserial==3.5
 PySocks==1.7.1
 python-apt==2.4.0+ubuntu4
+python-dateutil==2.9.0.post0
 python-docx==1.1.2
 python-dotenv==1.0.1
 pytz==2022.1
 PyYAML==5.4.1
+realtime==2.0.6
 requests==2.32.3
 rich==13.9.4
 SecretStorage==3.3.1
@@ -106,6 +116,10 @@ soupsieve==2.6
 spacy-legacy==3.0.12
 spacy-loggers==1.0.5
 srsly==2.4.8
+storage3==0.9.0
+StrEnum==0.4.15
+supabase==2.10.0
+supafunc==0.7.0
 systemd-python==234
 thinc==8.3.2
 tqdm==4.66.6
@@ -122,6 +136,7 @@ wadllib==1.3.6
 wasabi==1.1.3
 weasel==0.4.1
 websocket-client==1.8.0
+websockets==13.1
 Werkzeug==3.1.3
 wrapt==1.16.0
 wsproto==1.2.0

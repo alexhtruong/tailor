@@ -1,6 +1,6 @@
 # backend/form_routes.py
 from flask import Blueprint, request, jsonify
-from utils import parseFeedback, getResumeFeedback, resumeTextExtraction
+from resume import parseFeedback, getResumeFeedback, resumeTextExtraction
 
 form_bp = Blueprint('form_bp', __name__)
 
