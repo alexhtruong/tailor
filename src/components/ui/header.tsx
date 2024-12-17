@@ -1,50 +1,59 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import useAuth from '@/hooks/useAuth';
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-//TODO: currently implementing the user authentication
-// adding databases and authentication logic, so the ultimate goal is to have this component working
 export function Header() {
-  const location = useLocation();
   const { auth, logout } = useAuth();
-
-  
-
-  // TODO: figure out user authentication and how to maintain it, for now this will be an error
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 border-b">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60" >
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold">
-            Tailor.ai
-          </Link>
-          {(location.pathname === '/tailor') && (
-            <div className="absolute left-1/2 transform -translate-x-1/2 font-bold text-2xl">
-            Analyze
-            </div>
-          )}
+          <div className="flex flex-row gap-3">
+            <img src="/src/assets/tailor-icon.svg" />
+            <Link to="/" className="text-xl font-bold">
+              Tailor.dev
+            </Link>
+          </div>
           <nav className="space-x-4">
             {auth?.access_token ? (
-              <>
-                <Link to="/tailor" className={location.pathname === '/tailor' ? 'font-bold' : ''}>
-                  Tailor
-                </Link>
-                <Button variant="ghost" onClick={() => logout()}>
-                  Sign Out
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost">
+                  <img src="/src/assets/user-icon.svg" />
                 </Button>
-              </>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className='flex flex-col w-full'>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <Link to="/profile" onClick={() => {}}>
+                  <DropdownMenuItem >
+                    Profile
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+                <Link to="/" onClick={logout}>
+                  <DropdownMenuItem >
+                    Sign out
+                  </DropdownMenuItem>
+                </Link>
+              </DropdownMenuContent>
+            </DropdownMenu>
             ) : (
-              <>
-                <Button variant="ghost" onClick={() => logout()}>
-                    Sign Out
-                </Button>
-                <Link to="/login" className="font-bold">
-                  Join us
+              <Button asChild>
+                <Link to="/login">
+                  Sign up
                 </Link>
-              </>
-              
+              </Button>
             )}
           </nav>
         </div>

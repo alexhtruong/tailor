@@ -23,7 +23,6 @@ export const Login: React.FC = () => {
           console.log(auth);
           return;
         } catch (error) {
-        // throws up to onGoogleLogin's try catch block 
           throw error;
         }
     };
@@ -55,12 +54,12 @@ export const Login: React.FC = () => {
                     <img src="src/assets/google-icon.svg" alt="Google Logo" width={20} height={20} className="mr-2" />
                         Sign in with Google
                 </button>
-                <button 
+                {/* <button 
                     className="w-full flex items-center justify-center border border-gray-300 p-2 rounded-md hover:bg-gray-100" 
                     onClick={() => onGoogleLogin()}>
                     <img src="src/assets/github-mark.svg" alt="GitHub Logo" width={20} height={20} className="mr-2" />
                         Sign in with GitHub
-                </button>
+                </button> */}
                 {/* <div className="relative">
                     <div className="absolute inset-0 flex items-center">
                         <span className="w-full border-t" />

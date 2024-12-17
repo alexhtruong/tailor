@@ -1,28 +1,33 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import App from '@/App';
+import MainPage from '@/MainPage';
 import Login from '@/routes/login';
 import Header from '@/components/ui/header';
-import TailorDashboard from '@/routes/TailorDashboard';
+import TailorDashboard from '@/routes/tailor';
 import { AuthProvider } from '@/context/AuthProvider';
 import RequireAuth from '@/components/RequireAuth';
 import PersistLogin from '@/components/PersistLogin';
+import Profile from './profile';
 
 export const AppRouter = () => {
     return (
         <BrowserRouter>
             <AuthProvider>
-                <div className="min-h-screen w-full flex flex-col justify-center">
-                    <Header />
-                    <Routes>
-                        <Route element={<PersistLogin />}>
-                            <Route path="/" element={<App />} />
+                <main className="flex min-h-screen h-screen flex-col">
+                    <div className="min-h-screen bg-background">
+                        <Header />
+                        <Routes>
                             <Route path="/login" element={<Login />} />
-                            <Route element={<RequireAuth />}>
-                                <Route path="/tailor" element={<TailorDashboard />} />
+                            <Route element={<PersistLogin />}>
+                                <Route path="/" element={<MainPage />} />
+                                {/* protected routes */}
+                                <Route element={<RequireAuth />}>
+                                    <Route path="/profile" element={<Profile />} />
+                                    <Route path="/tailor" element={<TailorDashboard />} />
+                                </Route>
                             </Route>
-                        </Route>
-                    </Routes>
-                </div>
+                        </Routes>
+                    </div>
+                </main>
             </AuthProvider>
         </BrowserRouter>
     );

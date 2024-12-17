@@ -62,7 +62,6 @@ def google_login():
     jwt_refresh_token = create_refresh_token(identity=identity)
     response = jsonify(user=user_info, access_token=jwt_access_token)
     response.set_cookie('refresh_token_cookie', value=jwt_refresh_token, secure=True, httponly=True, max_age=timedelta(days=30))
-    print(f"Refresh token set: {jwt_refresh_token}", flush=True)
 
     return response, 200
 
@@ -104,7 +103,6 @@ def refresh():
         response.set_cookie('refresh_token_cookie', value=new_refresh_token, secure=True, httponly=True, max_age=timedelta(days=30))
         return response, 200
     except Exception as e:
-        print("invalid refresh token", flush=True)
         return jsonify({"msg": "Invalid refresh token"}), 401
 
 # Protect a route with jwt_required, which will kick out requests
